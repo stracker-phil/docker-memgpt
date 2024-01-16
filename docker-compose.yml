@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: ./config/docker/dockerfile-memgpt
       args:
-        - MEM_USER=${SYS_USERNAME}
+        MEM_USER: ${SYS_USERNAME:-memgpt}
     depends_on:
       - database
     environment:
@@ -31,8 +31,9 @@ services:
     volumes:
       # Expose the memgpt config folder to the host machine.
       # This allows us to track agents and conversation details in git.
-      - ./config/memgpt:/home/${SYS_USERNAME}/.memgpt
+      - ./config/memgpt:/home/${SYS_USERNAME:-memgpt}/.memgpt
+
       # [2] Dev: Make live changes to the .bashrc file
-      - ./config/docker/bashrc.sh:/home/${SYS_USERNAME}/.bashrc
+      - ./config/docker/bashrc.sh:/home/${SYS_USERNAME:-memgpt}/.bashrc
       # [3] Dev: Inspect the current memgpt code
-      - ./system/memgpt:/home/${SYS_USERNAME}/.local/lib/python3.9/site-packages/memgpt
+      - ./system/memgpt:/home/${SYS_USERNAME:-memgpt}/.local/lib/python3.9/site-packages/memgpt

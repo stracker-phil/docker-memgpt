@@ -11,6 +11,10 @@ This Docker environment provides us with MemGPT and a persistent Postgres databa
 1. Create the .env file and set the values: `cp .env.dist .env` 
 2. Run the start script: `./start.sh setup`
 
+**Updates**
+
+Run `./start.sh setup` again to rebuild the Docker containers. Data in your DB and 
+
 ## Usage
 
 **Start**
