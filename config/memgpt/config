@@ -1,0 +1,27 @@
+[defaults]
+preset = memgpt_chat
+persona = sam_pov
+human = basic
+
+[model]
+model = ehartford/dolphin-2.5-mixtral-8x7b
+model_endpoint = https://api.memgpt.ai
+model_endpoint_type = vllm
+model_wrapper = chatml
+context_window = 32768
+
+[embedding]
+embedding_endpoint_type = openai
+embedding_endpoint = https://api.openai.com/v1
+embedding_dim = 1536
+embedding_chunk_size = 300
+
+[archival_storage]
+type = postgres
+uri = postgresql+pg8000://user:password@database:5432/memgpt
+
+[version]
+memgpt_version = 0.2.11
+
+[client]
+anon_clientid = 000000000000000000000242ac150003

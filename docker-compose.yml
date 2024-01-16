@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+
+  database:
+    container_name: 'memgpt-postgres'
+    image: 'ankane/pgvector:latest'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      # [1] Dev: Expose the Postgres DB to our file system
+      - ./system/postgres:/var/lib/postgresql/data
+      # Prod: Do not expose the Postgres DB volume
+      # - database:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432"
+
+  memgpt:
+    container_name: 'memgpt'
+    build:
+      context: .
+      dockerfile: ./config/docker/dockerfile-memgpt
+      args:
+        - MEM_USER=${SYS_USERNAME}
+    depends_on:
+      - database
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      # Expose the memgpt config folder to the host machine.
+      # This allows us to track agents and conversation details in git.
+      - ./config/memgpt:/home/${SYS_USERNAME}/.memgpt
+      # [2] Dev: Make live changes to the .bashrc file
+      - ./config/docker/bashrc.sh:/home/${SYS_USERNAME}/.bashrc
+      # [3] Dev: Inspect the current memgpt code
+      - ./system/memgpt:/home/${SYS_USERNAME}/.local/lib/python3.9/site-packages/memgpt

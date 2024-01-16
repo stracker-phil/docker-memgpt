@@ -1,0 +1,35 @@
+# Use an official lightweight Python runtime as a parent image
+FROM python:3.11-slim
+ARG MEM_USER=memgpt
+
+RUN apt-get update && \
+    apt-get install -y sudo curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# The setup script which installs MemGPT and all requirements
+COPY ./config/docker/setup-memgpt.sh /usr/local/bin/setup.sh
+RUN chmod +x /usr/local/bin/setup.sh
+
+# Install starship to improve the terminal.
+RUN curl -sS https://starship.rs/install.sh -o install_starship.sh && \
+	sh ./install_starship.sh --yes && \
+	rm install_starship.sh
+
+#  Create non-root user
+RUN useradd -ms /bin/bash $MEM_USER \
+    && chown $MEM_USER:$MEM_USER /usr/local/bin/setup.sh
+
+# Switch to the non-root user. Note that USER does not expand variables.
+USER $MEM_USER
+
+# Implement our own bashrc setup
+COPY ./config/docker/bashrc.sh /home/$MEM_USER/.bashrc
+
+# Set PATH for all subsequent layers
+ENV PATH="/home/$MEM_USER/.local/bin:$PATH"
+
+# Run the setup script when the container starts
+RUN /usr/local/bin/setup.sh
+
+# Keep the container running until it's manually shut down.
+CMD ["tail", "-f", "/dev/null"]
