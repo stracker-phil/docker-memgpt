@@ -32,7 +32,7 @@ See next section for a list of common MemGPT commands.
 exit
 
 # In your host terminal:
-docker compose down
+./stop.sh
 ```
 
 ## MemGPT commands
