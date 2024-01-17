@@ -1,0 +1,5 @@
+pgvector
+psycopg
+psycopg[binary,pool]
+psycopg2-binary
+pg8000

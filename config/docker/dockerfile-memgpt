@@ -8,6 +8,7 @@ RUN apt-get update && \
 
 # The setup script which installs MemGPT and all requirements
 COPY ./config/docker/setup-memgpt.sh /usr/local/bin/setup.sh
+COPY ./config/docker/memgpt-requirements.txt /usr/local/etc/memgpt-requirements.txt
 RUN chmod +x /usr/local/bin/setup.sh
 
 # Install starship to improve the terminal.

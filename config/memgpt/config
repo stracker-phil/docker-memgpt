@@ -18,7 +18,7 @@ embedding_chunk_size = 300
 
 [archival_storage]
 type = postgres
-uri = postgresql+pg8000://user:password@database:5432/memgpt
+uri = postgresql+pg8000://user:password@database:5432/memgptdb
 
 [version]
 memgpt_version = 0.2.11

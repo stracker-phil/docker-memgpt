@@ -1,19 +1,26 @@
 version: '3.9'
 
+
+volumes:
+  database: {}
+
+
 services:
 
   database:
     container_name: 'memgpt-postgres'
-    image: 'ankane/pgvector:latest'
+    build:
+      context: .
+      dockerfile: ./config/docker/dockerfile-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       # [1] Dev: Expose the Postgres DB to our file system
-      - ./system/postgres:/var/lib/postgresql/data
+      # - ./system/postgres:/var/lib/postgresql/data
       # Prod: Do not expose the Postgres DB volume
-      # - database:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_HOST_PORT}:5432"
 

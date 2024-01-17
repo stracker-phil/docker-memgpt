@@ -2,6 +2,13 @@
 
 This Docker environment provides us with MemGPT and a persistent Postgres database.
 
+**Helpful Links**
+
+- GitHub source: https://github.com/cpacker/MemGPT
+- Documentation: https://memgpt.readme.io/docs 
+- Explanation video: https://www.youtube.com/watch?v=QQ2QOPWZKVc (Matthew Berman)
+
+
 ## Preparation
 
 1. Install Docker Desktop (version 18.0 or higher)
@@ -49,6 +56,16 @@ memgpt list [agents|humans|personas|sources]
 ```
 
 **Using Archival Memory**
+
+ℹ️️ Archival Memory takes a snapshot of the attached data sources. Any changes made to those sources after attaching them is not seen by the MemGPT agents
+
+MemGPT can access local files and use their contents to build answers during conversations.
+Two steps are required to provide data to a MemGPT agent:
+
+1. Load the file/source into the general archival storage
+2. Attach a source to a specific agent
+
+Tip: Tell the agent pro-actively to “search your archival storage” for certain information to ensure it’s actually used
 
 ```shell
 # Step 1: Load data into the archival memory

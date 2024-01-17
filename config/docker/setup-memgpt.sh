@@ -4,9 +4,8 @@
 python -m ensurepip
 pip install --upgrade pip
 
+# Install the MemGPT project.
 pip install -U pymemgpt
 
-pip install pgvector
-pip install psycopg
-pip install "psycopg[binary,pool]"
-pip install psycopg2-binary
+# Requirements that are missing in the default python-slim image.
+pip install -r /usr/local/etc/memgpt-requirements.txt
