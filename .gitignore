@@ -2,3 +2,7 @@
 *.log
 
 /system
+
+# Comment the following line to store your personal
+# configuration and agent state in a private repo:
+/config/memgpt

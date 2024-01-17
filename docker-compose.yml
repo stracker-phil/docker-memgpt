@@ -17,9 +17,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      # [1] Dev: Expose the Postgres DB to our file system
-      # - ./system/postgres:/var/lib/postgresql/data
-      # Prod: Do not expose the Postgres DB volume
       - database:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_HOST_PORT}:5432"
@@ -40,7 +37,7 @@ services:
       # This allows us to track agents and conversation details in git.
       - ./config/memgpt:/home/${SYS_USERNAME:-memgpt}/.memgpt
 
-      # [2] Dev: Make live changes to the .bashrc file
+      # [1] Dev: Make live changes to the .bashrc file
       - ./config/docker/bashrc.sh:/home/${SYS_USERNAME:-memgpt}/.bashrc
-      # [3] Dev: Inspect the current memgpt code
-      - ./system/memgpt:/home/${SYS_USERNAME:-memgpt}/.local/lib/python3.9/site-packages/memgpt
+      # [2] Dev: Inspect the current memgpt code
+      - ./system:/home/${SYS_USERNAME:-memgpt}/.local/lib/python3.9/site-packages/memgpt
